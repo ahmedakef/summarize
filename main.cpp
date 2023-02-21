@@ -6,8 +6,12 @@
 #include <set>
 #include <limits>
 #include <iomanip>
+#include <thread>
+#include <chrono>
+
 
 using namespace std;
+bool continue_reading = true;
 
 template <typename T>
 void printElement(T t)
@@ -74,16 +78,30 @@ bool is_number(const string &s)
     return *end == 0;
 }
 
+void handle_printing(Summarizer *summarizer) {
+    printElements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max"});
+    while(true){
+        summarizer->print_summery();
+        this_thread::sleep_for(chrono::seconds(5));
+        if (continue_reading == false)
+            break;
+    }
+}
+
 int main()
 {
-
     int number;
     string line;
     Summarizer summarizer;
-    while (1)
+    
+    thread timer(handle_printing, &summarizer);
+
+    while (continue_reading)
     {
         if (!getline(cin, line))
         {
+            // either an error hapened or we reached EOF
+            continue_reading = false;
             break;
         }
         if (!is_number(line))
@@ -93,8 +111,8 @@ int main()
         stringstream(line) >> number;
         summarizer.add_number(number);
     }
-    printElements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max"});
-    summarizer.print_summery();
+   
 
+    timer.join();
     return 0;
 }

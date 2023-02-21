@@ -1,2 +1,2 @@
 all:
-	g++ -std=c++11 main.cpp -o summarizer
+	g++ -std=c++11 -pthread main.cpp -o summarizer
