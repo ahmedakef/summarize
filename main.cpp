@@ -16,7 +16,7 @@ bool continue_reading = true;
 template <typename T>
 void printElement(T t)
 {
-    cout << left << setw(10) << setprecision(3) << t;
+    cout << left << setw(10) << fixed << setprecision(2) << t;
 }
 
 template<typename T>
@@ -26,7 +26,6 @@ void printElements(vector<T> elements)
     {
         printElement(element);
     }
-    cout<<endl;
 }
 
 class Summarizer
@@ -49,7 +48,7 @@ public:
 
     void print_summery()
     {
-        int count = numbers.size();
+        double count = numbers.size();
         double average = sum / count;
 
         set<double>::iterator it = numbers.begin();
@@ -79,10 +78,11 @@ bool is_number(const string &s)
 }
 
 void handle_printing(Summarizer *summarizer) {
-    printElements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max"});
+    printElements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max", "\n"});
     while(true){
+        cout<<"\r";
         summarizer->print_summery();
-        this_thread::sleep_for(chrono::seconds(5));
+        this_thread::sleep_for(chrono::seconds(1));
         if (continue_reading == false)
             break;
     }
