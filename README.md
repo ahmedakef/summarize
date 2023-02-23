@@ -27,7 +27,7 @@ other options:
 ```
 
 # Common Usage
-Usally you won't get a stream of numbers in you logs, you will need to precess the logs first to extract the numers you want only
+Usally you won't get a stream of numbers in your logs, you will need to precess the logs first to extract the numers you want only
 assume that `./generate` produce this logs:
 ```
 the request took 383 seconds to complete
