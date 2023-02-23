@@ -4,7 +4,8 @@ Summarizer gives you Summary about stream of integers and it updates the summary
 
 # Installation
 ```bash
-curl 
+curl -sSL -o summarize https://github.com/ahmedakef/summarize/releases/download/v1.0.0-alpha/summarize
+chmod +x summarize
 ```
 # Usage
 to summarize numbers from standard input:
@@ -37,3 +38,15 @@ you can use `awk` first then pass the resut to `summarize`
 ```bash
 ./generator | awk -W interactive '{print $4}' | ./summarize
 ```
+
+# building from source
+```bash
+make
+```
+## Required libraries
+* Boost Program Options
+
+On Debian-based distributions, the above can be installed with
+
+```
+sudo apt install libboost-program-options-dev

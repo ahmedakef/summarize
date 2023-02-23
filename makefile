@@ -4,4 +4,4 @@ all:
 	-pthread \
 	-o summarize \
 	main.cpp utils/utils.cpp modules/summarizer.cpp \
-	-lboost_program_options
+	-l boost_program_options
