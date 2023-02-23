@@ -62,10 +62,10 @@ int main(int ac, char *av[])
     {
         po::options_description desc("Allowed options");
         desc.add_options()
-            ("help,h", "produce help message")
-            ("file,f", po::value<string>(), "read input from a file")
-            ("delay,d", po::value<int>(&delay)->default_value(1), "delay time between re-calculating")
-            ("precision,p", po::value<int>(&precision)->default_value(2), "control the precision parameter")
+            ("help,h", "Produce help message")
+            ("file,f", po::value<string>(), "Eead input from a file")
+            ("delay,d", po::value<int>(&delay)->default_value(1), "Delay time between re-calculating")
+            ("precision,p", po::value<int>(&precision)->default_value(2), "Control the precision parameter")
         ;
 
         po::positional_options_description p;
@@ -78,8 +78,8 @@ int main(int ac, char *av[])
 
         if (vm.count("help"))
         {
-            cout << "summarizer - Summarize a stream of numbers by printing some aggregation functions every specified interval\n";
-            cout << "Usage: summarizer [file_name] [options]\n";
+            cout << "summarize - Summarize a stream of numbers by printing some aggregation functions every specified interval\n";
+            cout << "Usage: summarize [file_name] [options]\n";
             cout << desc << "\n";
             return 0;
         }
