@@ -7,10 +7,10 @@
 using namespace std;
 
 template <typename T>
-void printElement(T t);
+void printElement(T t, int precision);
 
 template<typename T>
-void printElements(vector<T> elements);
+void printElements(vector<T> elements, int precision);
 
 bool is_number(const string &s);
 

@@ -7,22 +7,22 @@
 using namespace std;
 
 template <typename T>
-void printElement(T t)
+void printElement(T t, int precision)
 {
-    cout << left << setw(10) << fixed << setprecision(2) << t;
+    cout << left << setw(10) << fixed << setprecision(precision) << t;
 }
 
 
 template<typename T> 
-void printElements(vector<T> elements)
+void printElements(vector<T> elements, int precision)
 {
     for( auto element : elements )
     {
-        printElement(element);
+        printElement(element, precision);
     }
 }
-template void printElements(vector<double> elements);
-template void printElements(vector<string> elements);
+template void printElements(vector<double> elements, int precision);
+template void printElements(vector<string> elements, int precision);
 
 
 

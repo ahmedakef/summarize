@@ -11,7 +11,7 @@ class Summarizer
 public:
   Summarizer();
   void add_number(double number);
-  void print_summery();
+  void print_summery(int precision);
 };
 
 #endif
