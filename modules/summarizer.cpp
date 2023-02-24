@@ -17,7 +17,7 @@ void Summarizer::add_number(double number)
     numbers.insert(number);
 }
 
-void Summarizer::print_summery(int precision)
+void Summarizer::print_summary(int precision)
 {
     double count = numbers.size();
     double average = sum / count;
@@ -37,5 +37,5 @@ void Summarizer::print_summery(int precision)
     // maximum exists at the end of the set: 0+50+45+4+1 = 100
     std::advance(it, 0.01 * count);
     double maximum = *it;
-    printElements(vector<double>{average, min, median, p95, p99, maximum}, precision);
+    print_elements(vector<double>{average, min, median, p95, p99, maximum}, precision);
 }

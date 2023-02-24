@@ -13,17 +13,17 @@ bool continue_reading = true;
 
 void handle_printing(Summarizer *summarizer, int delay, int precision)
 {
-    printElements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max", "\n"}, precision);
+    print_elements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max", "\n"}, precision);
     while (true)
     {
         cout << "\r";
-        summarizer->print_summery(precision);
-        this_thread::sleep_for(chrono::seconds(delay));
+        summarizer->print_summary(precision);
         if (continue_reading == false)
         {
             cout << endl;
             break;
         }
+        this_thread::sleep_for(chrono::seconds(delay));
     }
 }
 
@@ -78,7 +78,7 @@ int main(int ac, char *av[])
 
         if (vm.count("help"))
         {
-            cout << "summarize - Summarize a stream of numbers by printing some aggregation functions every specified interval\n";
+            cout << "summarize - Summarize a stream of numbers by printing some statistics every specified interval\n";
             cout << "Usage: summarize [file_name] [options]\n";
             cout << desc << "\n";
             return 0;
