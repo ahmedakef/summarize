@@ -13,7 +13,7 @@ bool continue_reading = true;
 
 void handle_printing(Summarizer *summarizer, int delay, int precision)
 {
-    print_elements(vector<string>{"Average", "Min", "Median", "p95", "p99", "Max", "\n"}, precision);
+    print_elements(vector<string>{"Count", "Mean", "Min", "Max", "P95", "P99", "\n"}, precision);
     while (true)
     {
         cout << "\r";
@@ -43,7 +43,7 @@ void start(int delay, int precision)
             continue_reading = false;
             break;
         }
-        if (!is_number(line))
+        if (!is_number(line) || line == "")
         {
             continue;
         }
@@ -63,7 +63,7 @@ int main(int ac, char *av[])
         po::options_description desc("Allowed options");
         desc.add_options()
             ("help,h", "Produce help message")
-            ("file,f", po::value<string>(), "Eead input from a file")
+            ("file,f", po::value<string>(), "Read input from a file")
             ("delay,d", po::value<int>(&delay)->default_value(1), "Delay time between re-calculating")
             ("precision,p", po::value<int>(&precision)->default_value(2), "Control the precision parameter")
         ;
@@ -99,7 +99,7 @@ int main(int ac, char *av[])
         }
         start(delay, precision);
     }
-    catch (exception &e)
+    catch (std::exception &e)
     {
         cerr << "Error: " << e.what() << "\n";
         return 1;

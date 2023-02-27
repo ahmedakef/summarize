@@ -1,41 +1,30 @@
-#include <set>
 #include <vector>
+#include <boost/array.hpp>
 #include "summarizer.hpp"
 #include "../utils/utils.hpp"
 
-using namespace std;
+using namespace boost::accumulators;
+static constexpr std::array<double, 2> probs{0.95, 0.99};
 
-Summarizer::Summarizer()
-{
-    sum = 0;
-    numbers = set<double>();
-}
+Summarizer::Summarizer() : acc(tag::extended_p_square::probabilities = probs) {}
 
 void Summarizer::add_number(double number)
 {
-    sum += number;
-    numbers.insert(number);
+    acc(number);
 }
 
 void Summarizer::print_summary(int precision)
 {
-    double count = numbers.size();
-    double average = sum / count;
+    double count_v = count(acc);
+    if (count_v == 0.0){
+        print_elements(std::vector<double>{0, 0, 0, 0, 0, 0}, precision);
+        return;
+    }
+    double mean_v = mean(acc);
+    double min_v = (min)(acc);
+    double max_v = (max)(acc);
+    double p95_v = extended_p_square(acc)[0];
+    double p99_v = extended_p_square(acc)[1];
 
-    set<double>::iterator it = numbers.begin();
-    // minimum is the first item in the set
-    double min = *it;
-    // median exist at the center of the set: 0+50 = 50;
-    std::advance(it, 0.50 * count);
-    double median = *it;
-    // p95 exists after 45% of the center: 0+50+45 = 95
-    std::advance(it, 0.45 * count);
-    double p95 = *it;
-    // p99 exists after 4% of the p95: 0+50+45+4 = 99
-    std::advance(it, 0.04 * count);
-    double p99 = *it;
-    // maximum exists at the end of the set: 0+50+45+4+1 = 100
-    std::advance(it, 0.01 * count);
-    double maximum = *it;
-    print_elements(vector<double>{average, min, median, p95, p99, maximum}, precision);
+    print_elements(std::vector<double>{count_v, mean_v, min_v, max_v, p95_v, p99_v}, precision);
 }
