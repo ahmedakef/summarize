@@ -30,7 +30,6 @@ void handle_printing(Summarizer *summarizer, int delay, int precision)
 
 void start(int delay, int precision)
 {
-    int number;
     string line;
     Summarizer summarizer;
 
@@ -44,11 +43,11 @@ void start(int delay, int precision)
             continue_reading = false;
             break;
         }
-        if (!is_number(line) || line == "")
+        auto [number, ok] = is_number(line);
+        if (!ok || line == "")
         {
             continue;
         }
-        stringstream(line) >> number;
         summarizer.add_number(number);
     }
 
