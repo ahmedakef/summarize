@@ -12,7 +12,7 @@ int main()
     {
         // cout<<"the request took "<<rand() % 1000 << " seconds to complete"<<endl;
         cout << rand() % 1000 << endl;
-        this_thread::sleep_for(400ms);
+        this_thread::sleep_for(chrono::milliseconds(300));
     }
 
     return 0;

@@ -1,7 +1,9 @@
 #include <vector>
+#include <array>
 #include <boost/array.hpp>
 #include "summarizer.hpp"
 #include "../utils/utils.hpp"
+
 
 using namespace boost::accumulators;
 static constexpr std::array<double, 2> probs{0.95, 0.99};

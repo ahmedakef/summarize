@@ -51,3 +51,8 @@ On Debian-based distributions, the above can be installed with
 
 ```
 sudo apt install libboost-program-options-dev
+```
+On Mac OS:
+```
+sudo port install boost
+```
