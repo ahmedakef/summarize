@@ -1,5 +1,6 @@
 #ifndef Summarizer_H
 #define Summarizer_H
+#include <mutex>
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics/stats.hpp>
 #include <boost/accumulators/statistics/count.hpp>
@@ -15,6 +16,8 @@ typedef accumulator_set<double, stats<tag::count, tag::mean, tag::min, tag::max,
 class Summarizer
 {
   accumulator_t acc;
+  std::mutex lock;
+
 
 public:
   Summarizer();

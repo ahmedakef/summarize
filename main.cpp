@@ -6,10 +6,11 @@
 #include "utils/utils.hpp"
 #include <fcntl.h>
 #include <boost/program_options.hpp>
+#include <atomic>
 namespace po = boost::program_options;
 
 using namespace std;
-bool continue_reading = true;
+atomic<bool> continue_reading = {true};
 
 void handle_printing(Summarizer *summarizer, int delay, int precision)
 {
