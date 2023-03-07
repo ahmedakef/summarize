@@ -12,11 +12,15 @@ Summarizer::Summarizer() : acc(tag::extended_p_square::probabilities = probs) {}
 
 void Summarizer::add_number(double number)
 {
+    std::lock_guard<std::mutex> lock(this->lock);
+
     acc(number);
 }
 
 void Summarizer::print_summary(int precision)
 {
+    std::lock_guard<std::mutex> lock(this->lock);
+
     double count_v = count(acc);
     if (count_v == 0.0){
         print_elements(std::vector<double>{0, 0, 0, 0, 0, 0}, precision);
