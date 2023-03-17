@@ -22,9 +22,9 @@ void print_elements(const vector<T> &elements, int precision)
 template void print_elements(const vector<double> &elements, int precision);
 template void print_elements(const vector<string> &elements, int precision);
 
-bool is_number(const string &s)
+tuple<double, bool> is_number(const string &s)
 {
     char *end;
-    strtod(s.c_str(), &end);
-    return *end == 0;
+    double r = strtod(s.c_str(), &end);
+    return {r, *end == 0};
 }

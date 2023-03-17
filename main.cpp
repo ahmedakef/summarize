@@ -2,18 +2,24 @@
 #include <sstream>
 #include <vector>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <fcntl.h>
 #include "modules/summarizer.hpp"
 #include "utils/utils.hpp"
-#include <fcntl.h>
 #include <boost/program_options.hpp>
+#include <atomic>
 namespace po = boost::program_options;
 
 using namespace std;
+mutex continue_m;
+condition_variable continue_cv;
 bool continue_reading = true;
 
 void handle_printing(Summarizer *summarizer, int delay, int precision)
 {
     print_elements(vector<string>{"Count", "Mean", "Min", "Max", "P95", "P99", "\n"}, precision);
+    unique_lock<mutex> lock(continue_m);
     while (true)
     {
         cout << "\r";
@@ -23,31 +29,35 @@ void handle_printing(Summarizer *summarizer, int delay, int precision)
             cout << endl;
             break;
         }
-        this_thread::sleep_for(chrono::seconds(delay));
+        // Atomically releases lock, blocks the current executing thread.
+        // The thread will be unblocked when notify_one() is executed, or when the delay expires.
+        // When unblocked, regardless of the reason, lock is reacquired
+        continue_cv.wait_for(lock, chrono::seconds(delay));
     }
 }
 
 void start(int delay, int precision)
 {
-    int number;
     string line;
     Summarizer summarizer;
 
     thread timer(handle_printing, &summarizer, delay, precision);
 
-    while (continue_reading)
+    while (true)
     {
         if (!getline(cin, line))
         {
             // either an error hapened or we reached EOF
+            lock_guard<mutex> lock(continue_m);
             continue_reading = false;
+            continue_cv.notify_one();
             break;
         }
-        if (!is_number(line) || line == "")
+        auto [number, ok] = is_number(line);
+        if (!ok || line == "")
         {
             continue;
         }
-        stringstream(line) >> number;
         summarizer.add_number(number);
     }
 

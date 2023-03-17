@@ -11,6 +11,7 @@ all:
 # all:
 # 	c++ \
 # 	-std=c++11 \
+# 	-fsanitize=thread -g \
 # 	-pthread \
 # 	-o summarize \
 # 	main.cpp utils/utils.cpp modules/summarizer.cpp \
